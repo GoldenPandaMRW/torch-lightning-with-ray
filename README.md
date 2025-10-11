@@ -35,6 +35,50 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+## Windows (CPython + CUDA 12.4)
+If you want GPU acceleration on Windows, use CPython and the official cu124 wheels from PyTorch.
+
+1) Create/refresh the venv with CPython 3.12
+```powershell
+py -0p            # lists installed Python interpreters
+py -3.12 -m venv .venv
+```
+
+2) Allow script activation in PowerShell and activate
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+. .\.venv\Scripts\Activate.ps1
+```
+
+3) Install GPU PyTorch (CUDA 12.4), then the rest
+```powershell
+python -m pip install -U pip setuptools wheel
+python -m pip install --index-url https://download.pytorch.org/whl/cu124 torch torchvision torchaudio
+python -m pip install -r requirements.txt
+```
+
+4) Verify CUDA is detected
+```powershell
+python - <<'PY'
+import torch
+print('torch', torch.__version__)
+print('cuda available', torch.cuda.is_available())
+print('cuda version', torch.version.cuda)
+if torch.cuda.is_available():
+    print('device0', torch.cuda.get_device_name(0))
+PY
+```
+
+CPU-only alternative:
+```powershell
+python -m pip install --index-url https://download.pytorch.org/whl/cpu torch torchvision torchaudio
+python -m pip install -r requirements.txt
+```
+
+Notes:
+- Use the `py` launcher to avoid MinGW/alternate Python builds. Wheels are for `win_amd64` CPython.
+- If prior docs referenced cu121, use cu124 instead as that’s the current stable index.
+
 ## Data layout
 Place your dataset in a directory (default: `Dataset_Robomaster-1`) with COCO-style files under `train/`, `valid/`, `test/` containing `_annotations.coco.json` and images referenced therein.
 
