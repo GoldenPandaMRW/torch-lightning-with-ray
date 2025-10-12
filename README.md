@@ -155,6 +155,22 @@ View all trials in TensorBoard:
 tensorboard --logdir ray_results/armor_unet_tune
 ```
 
+## Sharing TensorBoard Logs
+To inspect runs on another machine:
+
+1. Archive logs on this machine:
+   ```powershell
+   Compress-Archive -Path logs, ray_results -DestinationPath lightning_runs.zip
+   ```
+2. Copy `lightning_runs.zip` to the other device (USB, cloud drive, etc.).
+3. Extract it there, then launch TensorBoard pointing at the extracted folders:
+   ```powershell
+   tensorboard --logdir C:\\path\\to\\lightning_runs\\logs
+   tensorboard --logdir C:\\path\\to\\lightning_runs\\ray_results\\armor_unet_tune
+   ```
+
+The `.gitignore` already excludes `lightning_runs.zip` and `lightning_runs/` so archived logs stay out of version control.
+
 ## Project structure
 ```
 armor_unet/
