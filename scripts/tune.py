@@ -151,12 +151,13 @@ def main():
             mode="max",
             scheduler=scheduler,
             num_samples=args.samples,
+            trial_dirname_creator=short_dirname,
+            trial_name_creator=short_dirname,
         ),
         run_config=tune.RunConfig(
             storage_path=storage_path,
             name=args.name,
             verbose=1,
-            trial_dirname_creator=short_dirname,
         ),
     )
 
