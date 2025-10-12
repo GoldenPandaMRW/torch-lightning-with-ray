@@ -16,7 +16,7 @@ LOG_DIR = os.environ.get('LOG_DIR', 'logs')
 def train_armor_detector(
     data_root=DATA_ROOT,
     batch_size=8,
-    max_epochs=75,
+    max_epochs=5,
     learning_rate=1e-4,
     base_channels=32,
     checkpoint_dir=CHECKPOINT_DIR,
@@ -98,4 +98,12 @@ def train_armor_detector(
 
 if __name__ == '__main__':
     # Minimal CLI via env vars; users can also edit defaults above
-    train_armor_detector()
+    max_epochs_env = os.environ.get('MAX_EPOCHS')
+    if max_epochs_env is not None:
+        try:
+            me = int(max_epochs_env)
+        except ValueError:
+            me = 5
+        train_armor_detector(max_epochs=me)
+    else:
+        train_armor_detector()
