@@ -138,13 +138,17 @@ python -m pip install "ray[tune]"
 
 Run a quick search (5 epochs/trial, 8 trials):
 ```powershell
-python scripts/tune.py --samples 8 --epochs 5 --gpus 1 --cpus 4
+python scripts/tune.py --samples 8 --epochs 5 --gpus 1 --cpus 4 --data-root C:\path\to\Dataset_Robomaster-1
 ```
 
 What it does:
 - Tunes `learning_rate`, `weight_decay`, `base_channels`, `batch_size` with ASHA.
 - Each trial writes TensorBoard logs to its own subfolder.
 - Results are under `ray_results/armor_unet_tune`.
+
+Notes:
+- `--data-root` overrides `DATA_ROOT`; omit it if the default `Dataset_Robomaster-1` directory exists.
+- Trial directory names are shortened to keep Windows paths under 260 chars.
 
 View all trials in TensorBoard:
 ```bash

@@ -32,7 +32,7 @@ def train_tune(config: dict):
     pl.seed_everything(42, workers=True)
 
     # Resolve paths
-    data_root = os.environ.get("DATA_ROOT", "Dataset_Robomaster-1")
+    data_root = config.get("data_root") or os.environ.get("DATA_ROOT", "Dataset_Robomaster-1")
     trial_dir = session.get_trial_dir()
     tb_dir = os.path.join(trial_dir, "tb")
     ckpt_dir = os.path.join(trial_dir, "ckpts")
@@ -103,9 +103,12 @@ def main():
     parser.add_argument("--gpus", type=float, default=1, help="GPUs per trial (e.g., 1)")
     parser.add_argument("--cpus", type=float, default=4, help="CPUs per trial")
     parser.add_argument("--name", type=str, default="armor_unet_tune", help="Ray experiment name")
+    parser.add_argument("--data-root", type=str, default=None, help="Path to dataset root (overrides DATA_ROOT env)")
     args = parser.parse_args()
 
     # Search space (safe ranges; architecture preserved)
+    data_root = args.data_root or os.environ.get("DATA_ROOT", "Dataset_Robomaster-1")
+
     param_space = {
         "learning_rate": tune.loguniform(1e-5, 3e-3),
         "weight_decay": tune.loguniform(1e-7, 1e-3),
@@ -114,6 +117,7 @@ def main():
         "num_workers": tune.choice([2, 4]),
         "max_epochs": args.epochs,
         "devices": 1,
+        "data_root": data_root,
         "loss_name": tune.choice(["bce_dice", "focal", "tversky"]),
         "dice_lambda": tune.choice([0.5, 1.0, 1.5]),
         "focal_alpha": tune.choice([0.25, 0.5]),
@@ -128,11 +132,16 @@ def main():
         max_t=args.epochs,
         grace_period=1,
         reduction_factor=2,
-        metric="val_dice",
-        mode="max",
     )
 
     trainable = tune.with_resources(train_tune, {"cpu": args.cpus, "gpu": args.gpus})
+
+    storage_path = os.path.join(ROOT, "ray_results")
+
+    storage_path = os.path.join(ROOT, "ray_results")
+
+    def short_dirname(trial):
+        return f"trial_{trial.trial_id}"[:40]
 
     tuner = tune.Tuner(
         trainable,
@@ -144,9 +153,10 @@ def main():
             num_samples=args.samples,
         ),
         run_config=tune.RunConfig(
-            local_dir="ray_results",
+            storage_path=storage_path,
             name=args.name,
             verbose=1,
+            trial_dirname_creator=short_dirname,
         ),
     )
 
