@@ -3,4 +3,5 @@ __pycache__/
 ray_results/
 *.pyc
 scripts/__pycache__/
-
+lightning_runs.zip
+lightning_runs/
