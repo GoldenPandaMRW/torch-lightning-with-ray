@@ -128,6 +128,29 @@ tensorboard --logdir logs
 ```
 Open the printed URL in your browser.
 
+## Hyperparameter Tuning (Ray Tune)
+Run multiple trials in parallel without changing the model or dataloaders.
+
+Install Ray Tune (once):
+```powershell
+python -m pip install "ray[tune]"
+```
+
+Run a quick search (5 epochs/trial, 8 trials):
+```powershell
+python scripts/tune.py --samples 8 --epochs 5 --gpus 1 --cpus 4
+```
+
+What it does:
+- Tunes `learning_rate`, `weight_decay`, `base_channels`, `batch_size` with ASHA.
+- Each trial writes TensorBoard logs to its own subfolder.
+- Results are under `ray_results/armor_unet_tune`.
+
+View all trials in TensorBoard:
+```bash
+tensorboard --logdir ray_results/armor_unet_tune
+```
+
 ## Project structure
 ```
 armor_unet/
@@ -138,4 +161,6 @@ armor_unet/
 train.py            # Entrypoint for training/evaluation
 requirements.txt
 environment.yml
+scripts/
+  tune.py          # Ray Tune search over hparams
 ```
