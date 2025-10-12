@@ -40,10 +40,24 @@ def train_tune(config: dict):
     )
 
     # Model (architecture preserved; only hparams are tuned)
+    loss_name = config.get("loss_name", "bce")
+    loss_params = {}
+    if loss_name == "bce_dice":
+        loss_params["dice_lambda"] = float(config.get("dice_lambda", 1.0))
+    elif loss_name == "focal":
+        loss_params["alpha"] = float(config.get("focal_alpha", 0.25))
+        loss_params["gamma"] = float(config.get("focal_gamma", 2.0))
+    elif loss_name == "tversky":
+        loss_params["alpha"] = float(config.get("tversky_alpha", 0.3))
+        loss_params["beta"] = float(config.get("tversky_beta", 0.7))
+        loss_params["gamma"] = float(config.get("tversky_gamma", 1.33))
+
     model = ArmorUNet(
         learning_rate=config.get("learning_rate", 1e-4),
         weight_decay=config.get("weight_decay", 1e-5),
         base_channels=config.get("base_channels", 32),
+        loss_name=loss_name,
+        loss_params=loss_params,
     )
 
     # Logger per trial
@@ -93,6 +107,13 @@ def main():
         "num_workers": tune.choice([2, 4]),
         "max_epochs": args.epochs,
         "devices": 1,
+        "loss_name": tune.choice(["bce_dice", "focal", "tversky"]),
+        "dice_lambda": tune.choice([0.5, 1.0, 1.5]),
+        "focal_alpha": tune.choice([0.25, 0.5]),
+        "focal_gamma": tune.choice([1.5, 2.0, 2.5]),
+        "tversky_alpha": tune.choice([0.3, 0.4]),
+        "tversky_beta": tune.choice([0.7, 0.6]),
+        "tversky_gamma": tune.choice([1.0, 1.33, 1.5]),
     }
 
     scheduler = ASHAScheduler(
@@ -133,4 +154,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
