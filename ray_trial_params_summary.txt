@@ -1,0 +1,499 @@
+﻿# Ray Tune Trial Parameters
+Generated: 2025-10-12 11:43:49
+
+Trial: train_tune_89205_00000_0_base_channels=48,batch_size=4,dice_lambda=0.5000,focal_alpha=0.2500,focal_gamma=2.5000,learning_rate=0.00_2025-10-11_21-55-32
+  status: error
+  parameters:
+    base_channels: 48
+    batch_size: 4
+    devices: 1
+    dice_lambda: 0.5
+    focal_alpha: 0.25
+    focal_gamma: 2.5
+    learning_rate: 0.00022848280792741313
+    loss_name: tversky
+    max_epochs: 5
+    num_workers: 2
+    tversky_alpha: 0.4
+    tversky_beta: 0.6
+    tversky_gamma: 1.5
+    weight_decay: 8.69726856511644E-07
+  error_preview:
+    Failure # 1 (occurred at 2025-10-11_21-55-37)
+    [36mray::ImplicitFunc.train()[39m (pid=27712, ip=127.0.0.1, actor_id=be4179b97e21d4bc1bcf5e0f01000000, repr=train_tune)
+      File "python\\ray\\_raylet.pyx", line 1988, in ray._raylet.execute_task
+      File "python\\ray\\_raylet.pyx", line 1931, in ray._raylet.execute_task.function_executor
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\_private\function_manager.py", line 693, in actor_method_executor
+        return method(__ray_actor, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\util\tracing\tracing_helper.py", line 461, in _resume_span
+        return method(self, *_args, **_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Trial: train_tune_89205_00001_1_base_channels=64,batch_size=4,dice_lambda=1.5000,focal_alpha=0.2500,focal_gamma=2.0000,learning_rate=0.00_2025-10-11_21-55-32
+  status: error
+  parameters:
+    base_channels: 64
+    batch_size: 4
+    devices: 1
+    dice_lambda: 1.5
+    focal_alpha: 0.25
+    focal_gamma: 2.0
+    learning_rate: 0.000938948789184735
+    loss_name: tversky
+    max_epochs: 5
+    num_workers: 4
+    tversky_alpha: 0.3
+    tversky_beta: 0.7
+    tversky_gamma: 1.0
+    weight_decay: 9.46927738570475E-07
+  error_preview:
+    Failure # 1 (occurred at 2025-10-11_21-55-43)
+    [36mray::ImplicitFunc.train()[39m (pid=26784, ip=127.0.0.1, actor_id=d168fb87d1c517298494e2b001000000, repr=train_tune)
+      File "python\\ray\\_raylet.pyx", line 1988, in ray._raylet.execute_task
+      File "python\\ray\\_raylet.pyx", line 1931, in ray._raylet.execute_task.function_executor
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\_private\function_manager.py", line 693, in actor_method_executor
+        return method(__ray_actor, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\util\tracing\tracing_helper.py", line 461, in _resume_span
+        return method(self, *_args, **_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Trial: train_tune_89205_00002_2_base_channels=64,batch_size=4,dice_lambda=0.5000,focal_alpha=0.2500,focal_gamma=1.5000,learning_rate=0.00_2025-10-11_21-55-32
+  status: error
+  parameters:
+    base_channels: 64
+    batch_size: 4
+    devices: 1
+    dice_lambda: 0.5
+    focal_alpha: 0.25
+    focal_gamma: 1.5
+    learning_rate: 0.0001665311830435681
+    loss_name: bce_dice
+    max_epochs: 5
+    num_workers: 2
+    tversky_alpha: 0.3
+    tversky_beta: 0.7
+    tversky_gamma: 1.5
+    weight_decay: 4.69223119368049E-06
+  error_preview:
+    Failure # 1 (occurred at 2025-10-11_21-55-48)
+    [36mray::ImplicitFunc.train()[39m (pid=34740, ip=127.0.0.1, actor_id=7d77f36747f71034681c2bbe01000000, repr=train_tune)
+      File "python\\ray\\_raylet.pyx", line 1988, in ray._raylet.execute_task
+      File "python\\ray\\_raylet.pyx", line 1931, in ray._raylet.execute_task.function_executor
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\_private\function_manager.py", line 693, in actor_method_executor
+        return method(__ray_actor, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\util\tracing\tracing_helper.py", line 461, in _resume_span
+        return method(self, *_args, **_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Trial: train_tune_dc0c9_00000_0_base_channels=64,batch_size=4,dice_lambda=0.5000,focal_alpha=0.5000,focal_gamma=2.5000,learning_rate=0.00_2025-10-11_21-57-51
+  status: error
+  parameters:
+    base_channels: 64
+    batch_size: 4
+    devices: 1
+    dice_lambda: 0.5
+    focal_alpha: 0.5
+    focal_gamma: 2.5
+    learning_rate: 0.002475253290395866
+    loss_name: bce_dice
+    max_epochs: 5
+    num_workers: 4
+    tversky_alpha: 0.4
+    tversky_beta: 0.6
+    tversky_gamma: 1.5
+    weight_decay: 7.5611651126365E-07
+  error_preview:
+    Failure # 1 (occurred at 2025-10-11_21-57-56)
+    [36mray::ImplicitFunc.train()[39m (pid=4272, ip=127.0.0.1, actor_id=231216d72abc518da830fe5901000000, repr=train_tune)
+      File "python\\ray\\_raylet.pyx", line 1988, in ray._raylet.execute_task
+      File "python\\ray\\_raylet.pyx", line 1931, in ray._raylet.execute_task.function_executor
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\_private\function_manager.py", line 693, in actor_method_executor
+        return method(__ray_actor, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\util\tracing\tracing_helper.py", line 461, in _resume_span
+        return method(self, *_args, **_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Trial: train_tune_dc0c9_00001_1_base_channels=16,batch_size=4,dice_lambda=1.0000,focal_alpha=0.2500,focal_gamma=2.0000,learning_rate=0.00_2025-10-11_21-57-51
+  status: error
+  parameters:
+    base_channels: 16
+    batch_size: 4
+    devices: 1
+    dice_lambda: 1.0
+    focal_alpha: 0.25
+    focal_gamma: 2.0
+    learning_rate: 1.78907182899763E-05
+    loss_name: tversky
+    max_epochs: 5
+    num_workers: 2
+    tversky_alpha: 0.3
+    tversky_beta: 0.7
+    tversky_gamma: 1.5
+    weight_decay: 1.00560692771306E-07
+  error_preview:
+    Failure # 1 (occurred at 2025-10-11_21-58-01)
+    [36mray::ImplicitFunc.train()[39m (pid=14072, ip=127.0.0.1, actor_id=c6dfb08632dc4a733af265b501000000, repr=train_tune)
+      File "python\\ray\\_raylet.pyx", line 1988, in ray._raylet.execute_task
+      File "python\\ray\\_raylet.pyx", line 1931, in ray._raylet.execute_task.function_executor
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\_private\function_manager.py", line 693, in actor_method_executor
+        return method(__ray_actor, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\util\tracing\tracing_helper.py", line 461, in _resume_span
+        return method(self, *_args, **_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Trial: train_tune_dc0c9_00002_2_base_channels=32,batch_size=8,dice_lambda=1.0000,focal_alpha=0.5000,focal_gamma=2.5000,learning_rate=0.00_2025-10-11_21-57-51
+  status: error
+  parameters:
+    base_channels: 32
+    batch_size: 8
+    devices: 1
+    dice_lambda: 1.0
+    focal_alpha: 0.5
+    focal_gamma: 2.5
+    learning_rate: 1.54097181966677E-05
+    loss_name: bce_dice
+    max_epochs: 5
+    num_workers: 2
+    tversky_alpha: 0.3
+    tversky_beta: 0.6
+    tversky_gamma: 1.33
+    weight_decay: 4.9447007091896E-07
+  error_preview:
+    Failure # 1 (occurred at 2025-10-11_21-58-06)
+    [36mray::ImplicitFunc.train()[39m (pid=3340, ip=127.0.0.1, actor_id=5e2a58053ea4911b038dc4ed01000000, repr=train_tune)
+      File "python\\ray\\_raylet.pyx", line 1988, in ray._raylet.execute_task
+      File "python\\ray\\_raylet.pyx", line 1931, in ray._raylet.execute_task.function_executor
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\_private\function_manager.py", line 693, in actor_method_executor
+        return method(__ray_actor, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\util\tracing\tracing_helper.py", line 461, in _resume_span
+        return method(self, *_args, **_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Trial: train_tune_dc0c9_00003_3_base_channels=64,batch_size=12,dice_lambda=1.5000,focal_alpha=0.2500,focal_gamma=1.5000,learning_rate=0.0_2025-10-11_21-57-51
+  status: error
+  parameters:
+    base_channels: 64
+    batch_size: 12
+    devices: 1
+    dice_lambda: 1.5
+    focal_alpha: 0.25
+    focal_gamma: 1.5
+    learning_rate: 8.40081308284896E-05
+    loss_name: focal
+    max_epochs: 5
+    num_workers: 4
+    tversky_alpha: 0.4
+    tversky_beta: 0.7
+    tversky_gamma: 1.0
+    weight_decay: 1.41280212738147E-07
+  error_preview:
+    Failure # 1 (occurred at 2025-10-11_21-58-11)
+    [36mray::ImplicitFunc.train()[39m (pid=30208, ip=127.0.0.1, actor_id=36db2e289d14ff0d5be3af9b01000000, repr=train_tune)
+      File "python\\ray\\_raylet.pyx", line 1988, in ray._raylet.execute_task
+      File "python\\ray\\_raylet.pyx", line 1931, in ray._raylet.execute_task.function_executor
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\_private\function_manager.py", line 693, in actor_method_executor
+        return method(__ray_actor, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\util\tracing\tracing_helper.py", line 461, in _resume_span
+        return method(self, *_args, **_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Trial: train_tune_dc0c9_00004_4_base_channels=64,batch_size=4,dice_lambda=1.5000,focal_alpha=0.2500,focal_gamma=1.5000,learning_rate=0.00_2025-10-11_21-57-51
+  status: error
+  parameters:
+    base_channels: 64
+    batch_size: 4
+    devices: 1
+    dice_lambda: 1.5
+    focal_alpha: 0.25
+    focal_gamma: 1.5
+    learning_rate: 9.60943419100482E-05
+    loss_name: bce_dice
+    max_epochs: 5
+    num_workers: 4
+    tversky_alpha: 0.3
+    tversky_beta: 0.7
+    tversky_gamma: 1.5
+    weight_decay: 8.86116869172505E-05
+  error_preview:
+    Failure # 1 (occurred at 2025-10-11_21-58-16)
+    [36mray::ImplicitFunc.train()[39m (pid=25704, ip=127.0.0.1, actor_id=9078edcb5a5c740e0551c6a701000000, repr=train_tune)
+      File "python\\ray\\_raylet.pyx", line 1988, in ray._raylet.execute_task
+      File "python\\ray\\_raylet.pyx", line 1931, in ray._raylet.execute_task.function_executor
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\_private\function_manager.py", line 693, in actor_method_executor
+        return method(__ray_actor, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\util\tracing\tracing_helper.py", line 461, in _resume_span
+        return method(self, *_args, **_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Trial: train_tune_dc0c9_00005_5_base_channels=64,batch_size=8,dice_lambda=0.5000,focal_alpha=0.5000,focal_gamma=1.5000,learning_rate=0.00_2025-10-11_21-57-51
+  status: error
+  parameters:
+    base_channels: 64
+    batch_size: 8
+    devices: 1
+    dice_lambda: 0.5
+    focal_alpha: 0.5
+    focal_gamma: 1.5
+    learning_rate: 0.000184338371765957
+    loss_name: focal
+    max_epochs: 5
+    num_workers: 2
+    tversky_alpha: 0.4
+    tversky_beta: 0.6
+    tversky_gamma: 1.0
+    weight_decay: 2.6424052799649E-06
+  error_preview:
+    Failure # 1 (occurred at 2025-10-11_21-58-21)
+    [36mray::ImplicitFunc.train()[39m (pid=5136, ip=127.0.0.1, actor_id=e4af472b62395090d0c0793d01000000, repr=train_tune)
+      File "python\\ray\\_raylet.pyx", line 1988, in ray._raylet.execute_task
+      File "python\\ray\\_raylet.pyx", line 1931, in ray._raylet.execute_task.function_executor
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\_private\function_manager.py", line 693, in actor_method_executor
+        return method(__ray_actor, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\util\tracing\tracing_helper.py", line 461, in _resume_span
+        return method(self, *_args, **_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Trial: train_tune_dc0c9_00006_6_base_channels=64,batch_size=12,dice_lambda=1.5000,focal_alpha=0.5000,focal_gamma=2.5000,learning_rate=0.0_2025-10-11_21-57-51
+  status: error
+  parameters:
+    base_channels: 64
+    batch_size: 12
+    devices: 1
+    dice_lambda: 1.5
+    focal_alpha: 0.5
+    focal_gamma: 2.5
+    learning_rate: 0.00020519178598860961
+    loss_name: focal
+    max_epochs: 5
+    num_workers: 4
+    tversky_alpha: 0.3
+    tversky_beta: 0.7
+    tversky_gamma: 1.5
+    weight_decay: 2.55133223066149E-06
+  error_preview:
+    Failure # 1 (occurred at 2025-10-11_21-58-26)
+    [36mray::ImplicitFunc.train()[39m (pid=32124, ip=127.0.0.1, actor_id=3c5822c0a399afe90cf345f301000000, repr=train_tune)
+      File "python\\ray\\_raylet.pyx", line 1988, in ray._raylet.execute_task
+      File "python\\ray\\_raylet.pyx", line 1931, in ray._raylet.execute_task.function_executor
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\_private\function_manager.py", line 693, in actor_method_executor
+        return method(__ray_actor, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\util\tracing\tracing_helper.py", line 461, in _resume_span
+        return method(self, *_args, **_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Trial: train_tune_dc0c9_00007_7_base_channels=32,batch_size=8,dice_lambda=0.5000,focal_alpha=0.5000,focal_gamma=1.5000,learning_rate=0.00_2025-10-11_21-57-51
+  status: error
+  parameters:
+    base_channels: 32
+    batch_size: 8
+    devices: 1
+    dice_lambda: 0.5
+    focal_alpha: 0.5
+    focal_gamma: 1.5
+    learning_rate: 0.00014124985870115877
+    loss_name: focal
+    max_epochs: 5
+    num_workers: 2
+    tversky_alpha: 0.4
+    tversky_beta: 0.7
+    tversky_gamma: 1.0
+    weight_decay: 2.54240928328922E-07
+  error_preview:
+    Failure # 1 (occurred at 2025-10-11_21-58-31)
+    [36mray::ImplicitFunc.train()[39m (pid=11876, ip=127.0.0.1, actor_id=b621e89e7f62396e578c079f01000000, repr=train_tune)
+      File "python\\ray\\_raylet.pyx", line 1988, in ray._raylet.execute_task
+      File "python\\ray\\_raylet.pyx", line 1931, in ray._raylet.execute_task.function_executor
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\_private\function_manager.py", line 693, in actor_method_executor
+        return method(__ray_actor, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\util\tracing\tracing_helper.py", line 461, in _resume_span
+        return method(self, *_args, **_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Trial: trial_200f9_00000
+  status: completed
+  training_iterations: 5
+  final_val_dice: 16
+  parameters:
+    base_channels: 48
+    batch_size: 8
+    data_root: C:\Users\micah\RoboGrinder\Dataset_Robomaster-1
+    devices: 1
+    dice_lambda: 1.5
+    focal_alpha: 0.5
+    focal_gamma: 2.0
+    learning_rate: 2.84290745994431E-05
+    loss_name: focal
+    max_epochs: 5
+    num_workers: 4
+    tversky_alpha: 0.4
+    tversky_beta: 0.7
+    tversky_gamma: 1.33
+    weight_decay: 4.21444874048791E-05
+
+Trial: trial_200f9_00001
+  status: completed
+  training_iterations: 2
+  final_val_dice: 06
+  parameters:
+    base_channels: 64
+    batch_size: 12
+    data_root: C:\Users\micah\RoboGrinder\Dataset_Robomaster-1
+    devices: 1
+    dice_lambda: 1.0
+    focal_alpha: 0.25
+    focal_gamma: 2.0
+    learning_rate: 0.0001717886507104577
+    loss_name: focal
+    max_epochs: 5
+    num_workers: 2
+    tversky_alpha: 0.3
+    tversky_beta: 0.7
+    tversky_gamma: 1.33
+    weight_decay: 4.73982229649048E-05
+
+Trial: trial_200f9_00002
+  status: error
+  parameters:
+    base_channels: 32
+    batch_size: 4
+    data_root: C:\Users\micah\RoboGrinder\Dataset_Robomaster-1
+    devices: 1
+    dice_lambda: 1.0
+    focal_alpha: 0.25
+    focal_gamma: 2.5
+    learning_rate: 0.0003240612842508239
+    loss_name: tversky
+    max_epochs: 5
+    num_workers: 4
+    tversky_alpha: 0.4
+    tversky_beta: 0.6
+    tversky_gamma: 1.5
+    weight_decay: 1.79509050503138E-07
+  error_preview:
+    Failure # 1 (occurred at 2025-10-12_00-35-46)
+    [36mray::ImplicitFunc.train()[39m (pid=37416, ip=127.0.0.1, actor_id=bef0d8982642d29f716ccd9b01000000, repr=train_tune)
+      File "python\\ray\\_raylet.pyx", line 1988, in ray._raylet.execute_task
+      File "python\\ray\\_raylet.pyx", line 1931, in ray._raylet.execute_task.function_executor
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\_private\function_manager.py", line 693, in actor_method_executor
+        return method(__ray_actor, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      File "C:\Users\micah\RoboGrinder\torch-lightning-with-ray\.venv\Lib\site-packages\ray\util\tracing\tracing_helper.py", line 461, in _resume_span
+        return method(self, *_args, **_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Trial: trial_200f9_00003
+  status: completed
+  training_iterations: 4
+  final_val_dice: 16
+  parameters:
+    base_channels: 64
+    batch_size: 8
+    data_root: C:\Users\micah\RoboGrinder\Dataset_Robomaster-1
+    devices: 1
+    dice_lambda: 0.5
+    focal_alpha: 0.5
+    focal_gamma: 2.5
+    learning_rate: 5.36646469041813E-05
+    loss_name: bce_dice
+    max_epochs: 5
+    num_workers: 2
+    tversky_alpha: 0.4
+    tversky_beta: 0.6
+    tversky_gamma: 1.0
+    weight_decay: 0.0001878307865237917
+
+Trial: trial_200f9_00004
+  status: completed
+  training_iterations: 1
+  final_val_dice: 16
+  parameters:
+    base_channels: 32
+    batch_size: 4
+    data_root: C:\Users\micah\RoboGrinder\Dataset_Robomaster-1
+    devices: 1
+    dice_lambda: 1.5
+    focal_alpha: 0.25
+    focal_gamma: 1.5
+    learning_rate: 3.93975216264496E-05
+    loss_name: bce_dice
+    max_epochs: 5
+    num_workers: 4
+    tversky_alpha: 0.4
+    tversky_beta: 0.6
+    tversky_gamma: 1.5
+    weight_decay: 0.00012380663521967708
+
+Trial: trial_200f9_00005
+  status: completed
+  training_iterations: 1
+  final_val_dice: 16
+  parameters:
+    base_channels: 48
+    batch_size: 12
+    data_root: C:\Users\micah\RoboGrinder\Dataset_Robomaster-1
+    devices: 1
+    dice_lambda: 0.5
+    focal_alpha: 0.5
+    focal_gamma: 1.5
+    learning_rate: 0.00022930860370980392
+    loss_name: bce_dice
+    max_epochs: 5
+    num_workers: 4
+    tversky_alpha: 0.3
+    tversky_beta: 0.6
+    tversky_gamma: 1.5
+    weight_decay: 1.59464295756511E-07
+
+Trial: trial_200f9_00006
+  status: completed
+  training_iterations: 1
+  final_val_dice: 06
+  parameters:
+    base_channels: 48
+    batch_size: 4
+    data_root: C:\Users\micah\RoboGrinder\Dataset_Robomaster-1
+    devices: 1
+    dice_lambda: 1.5
+    focal_alpha: 0.25
+    focal_gamma: 1.5
+    learning_rate: 0.0006268972432201766
+    loss_name: tversky
+    max_epochs: 5
+    num_workers: 4
+    tversky_alpha: 0.3
+    tversky_beta: 0.6
+    tversky_gamma: 1.33
+    weight_decay: 4.456925159568E-06
+
+Trial: trial_200f9_00007
+  status: completed
+  training_iterations: 1
+  final_val_dice: 06
+  parameters:
+    base_channels: 16
+    batch_size: 12
+    data_root: C:\Users\micah\RoboGrinder\Dataset_Robomaster-1
+    devices: 1
+    dice_lambda: 0.5
+    focal_alpha: 0.5
+    focal_gamma: 2.0
+    learning_rate: 0.001314070614516605
+    loss_name: focal
+    max_epochs: 5
+    num_workers: 4
+    tversky_alpha: 0.3
+    tversky_beta: 0.6
+    tversky_gamma: 1.5
+    weight_decay: 0.00013069294086691838
+
