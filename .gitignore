@@ -1,6 +1,5 @@
 .venv/
 __pycache__/
-ray_results/
 *.pyc
 scripts/__pycache__/
 lightning_runs.zip
