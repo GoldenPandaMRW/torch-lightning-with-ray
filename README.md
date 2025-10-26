@@ -121,30 +121,23 @@ export LOG_DIR=logs
 python train.py
 ```
 
-## TensorBoard
-After (or during) training, view logs:
-```bash
-tensorboard --logdir logs
-```
-Open the printed URL in your browser.
+## Experiment Tracking (Weights & Biases)
+Metrics, checkpoints, and media are logged to [Weights & Biases](https://wandb.ai/) via Lightning's `WandbLogger`.
+
+1. Run `wandb login` once (or export `WANDB_API_KEY=...`).
+2. Launch training with `python train.py`.
+3. After training, open the run URL printed in the console to inspect metrics online.
+
+Prefer offline logging? Set `WANDB_MODE=offline` before training and later sync with `wandb sync /path/to/run`.
 
 ## Hyperparameter Tuning
 This repository currently ships without Ray Tune. If you want to add tuning back later, see the notes at the end of this README for a clean, minimal Ray Tune setup.
 
-## Sharing TensorBoard Logs
-To inspect runs on another machine:
+## Sharing W&B Runs
+- Share the W&B URL printed at the end of training.
+- For offline runs, copy the `wandb/run-*` directory to another machine and execute `wandb sync path/to/run` to upload it.
 
-1. Archive logs on this machine:
-   ```powershell
-   Compress-Archive -Path logs -DestinationPath lightning_runs.zip
-   ```
-2. Copy `lightning_runs.zip` to the other device (USB, cloud drive, etc.).
-3. Extract it there, then launch TensorBoard pointing at the extracted folders:
-   ```powershell
-   tensorboard --logdir C:\\path\\to\\lightning_runs\\logs
-   ```
-
-The `.gitignore` already excludes `lightning_runs.zip` and `lightning_runs/` so archived logs stay out of version control.
+The `.gitignore` already excludes `wandb/`, so local run metadata stays out of version control.
 
 ## Project structure
 ```
@@ -171,7 +164,7 @@ Minimal outline for `scripts/tune.py`:
 ```python
 import os, argparse, torch, pytorch_lightning as pl
 from pytorch_lightning.callbacks import ModelCheckpoint
-from pytorch_lightning.loggers import TensorBoardLogger
+from pytorch_lightning.loggers import WandbLogger
 from ray import tune
 from ray.tune.schedulers import ASHAScheduler
 from ray.tune.integration.pytorch_lightning import TuneReportCallback
@@ -182,7 +175,7 @@ def train_tune(cfg):
     pl.seed_everything(42, workers=True)
     dm = ArmorDataModule(data_root=cfg['data_root'], batch_size=cfg['batch_size'])
     model = ArmorUNet(learning_rate=cfg['lr'], weight_decay=cfg['wd'], base_channels=cfg['base_ch'])
-    logger = TensorBoardLogger(save_dir=tune.get_trial_dir(), name="tb")
+    logger = WandbLogger(project="armor-unet", save_dir=tune.get_trial_dir(), log_model=False)
     callbacks = [
         TuneReportCallback({"val_dice": "val_dice", "val_loss": "val_loss"}, on="validation_end"),
         ModelCheckpoint(monitor="val_dice", mode="max", save_top_k=1)

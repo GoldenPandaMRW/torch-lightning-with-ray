@@ -14,7 +14,7 @@ import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 import pytorch_lightning as pl
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping, LearningRateMonitor
-from pytorch_lightning.loggers import TensorBoardLogger
+from pytorch_lightning.loggers import WandbLogger
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
 
@@ -330,10 +330,9 @@ def plot_training_history(checkpoint_path):
     '''Plot training history from checkpoint'''
     checkpoint = torch.load(checkpoint_path)
 
-    # Lightning saves metrics in a different format
-    # You'll need to use TensorBoard or load from logger
-    print("Use TensorBoard to visualize training:")
-    print(f"  tensorboard --logdir {LOG_DIR}")
+    # Lightning saves metrics separately; rely on W&B for tracking
+    print("Metrics are tracked in Weights & Biases.")
+    print("Open the run URL printed after training or run `wandb sync` for offline logs.")
 
 
 def visualize_predictions(model, datamodule, num_samples=4):
@@ -433,7 +432,15 @@ def train_armor_detector(
     lr_monitor = LearningRateMonitor(logging_interval='epoch')
 
     # Logger
-    logger = TensorBoardLogger(log_dir, name='armor_unet')
+    logger = WandbLogger(project='armor-unet', save_dir=log_dir, log_model=True)
+    logger.experiment.config.update({
+        'batch_size': batch_size,
+        'learning_rate': learning_rate,
+        'base_channels': base_channels,
+        'max_epochs': max_epochs,
+        'data_root': data_root,
+    })
+    logger.watch(model, log='all', log_freq=50)
 
     # Trainer
     trainer = pl.Trainer(
@@ -460,8 +467,9 @@ def train_armor_detector(
     print("Training complete!")
     print(f"Best model saved to: {checkpoint_callback.best_model_path}")
     print(f"Best validation Dice: {checkpoint_callback.best_model_score:.4f}")
-    print(f"\nView training in TensorBoard:")
-    print(f"  tensorboard --logdir {log_dir}")
+    print("\nTrack the run in Weights & Biases:")
+    print(f"  {logger.experiment.url}")
+    logger.experiment.finish()
 
     return model, trainer, datamodule
 
