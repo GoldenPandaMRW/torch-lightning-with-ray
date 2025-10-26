@@ -11,11 +11,10 @@ import pytorch_lightning as pl
 class ArmorPlateDataset(Dataset):
     """Dataset for armor plate segmentation from COCO format"""
 
-    def __init__(self, root_dir, split='train', augment=False, img_size: int = int(os.getenv("IMG_SIZE", "320"))):
+    def __init__(self, root_dir, split='train', augment=False):
         self.root_dir = root_dir
         self.split = split
         self.img_dir = os.path.join(root_dir, split)
-        self.img_size = int(img_size)
 
         # Load COCO annotations
         ann_path = os.path.join(self.img_dir, '_annotations.coco.json')
@@ -35,7 +34,6 @@ class ArmorPlateDataset(Dataset):
         # Albumentations transforms
         if augment:
             self.transform = A.Compose([
-                A.Resize(self.img_size, self.img_size),
                 A.HorizontalFlip(p=0.5),
                 A.VerticalFlip(p=0.5),
                 A.Rotate(limit=15, p=0.5),
@@ -45,7 +43,6 @@ class ArmorPlateDataset(Dataset):
             ])
         else:
             self.transform = A.Compose([
-                A.Resize(self.img_size, self.img_size),
                 A.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
                 ToTensorV2(),
             ])
@@ -83,21 +80,19 @@ class ArmorPlateDataset(Dataset):
 class ArmorDataModule(pl.LightningDataModule):
     """Lightning DataModule for armor detection"""
 
-    def __init__(self, data_root, batch_size=8, num_workers=2, img_size: int = int(os.getenv("IMG_SIZE", "320")), pin_memory: bool = False):
+    def __init__(self, data_root, batch_size=8, num_workers=2):
         super().__init__()
         self.data_root = data_root
         self.batch_size = batch_size
         self.num_workers = num_workers
-        self.img_size = int(img_size)
-        self.pin_memory = bool(pin_memory)
 
     def setup(self, stage=None):
         if stage == 'fit' or stage is None:
-            self.train_dataset = ArmorPlateDataset(self.data_root, split='train', augment=True, img_size=self.img_size)
-            self.val_dataset = ArmorPlateDataset(self.data_root, split='valid', augment=False, img_size=self.img_size)
+            self.train_dataset = ArmorPlateDataset(self.data_root, split='train', augment=True)
+            self.val_dataset = ArmorPlateDataset(self.data_root, split='valid', augment=False)
 
         if stage == 'test' or stage is None:
-            self.test_dataset = ArmorPlateDataset(self.data_root, split='test', augment=False, img_size=self.img_size)
+            self.test_dataset = ArmorPlateDataset(self.data_root, split='test', augment=False)
 
     def train_dataloader(self):
         return DataLoader(
@@ -105,7 +100,7 @@ class ArmorDataModule(pl.LightningDataModule):
             batch_size=self.batch_size,
             shuffle=True,
             num_workers=self.num_workers,
-            pin_memory=self.pin_memory,
+            pin_memory=True
         )
 
     def val_dataloader(self):
@@ -114,7 +109,7 @@ class ArmorDataModule(pl.LightningDataModule):
             batch_size=self.batch_size,
             shuffle=False,
             num_workers=self.num_workers,
-            pin_memory=self.pin_memory,
+            pin_memory=True
         )
 
     def test_dataloader(self):
@@ -123,5 +118,5 @@ class ArmorDataModule(pl.LightningDataModule):
             batch_size=self.batch_size,
             shuffle=False,
             num_workers=self.num_workers,
-            pin_memory=self.pin_memory,
+            pin_memory=True
         )
