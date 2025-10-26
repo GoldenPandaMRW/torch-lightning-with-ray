@@ -70,6 +70,7 @@ def train_armor_detector(
         project='armor-unet',
         save_dir=log_dir,
         log_model=True,
+        offline=False,
     )
     wandb_logger.experiment.config.update({
         'batch_size': batch_size,
