@@ -128,45 +128,20 @@ tensorboard --logdir logs
 ```
 Open the printed URL in your browser.
 
-## Hyperparameter Tuning (Ray Tune)
-Run multiple trials in parallel without changing the model or dataloaders.
-
-Install Ray Tune (once):
-```powershell
-python -m pip install "ray[tune]"
-```
-
-Run a quick search (5 epochs/trial, 8 trials):
-```powershell
-python scripts/tune.py --samples 8 --epochs 5 --gpus 1 --cpus 4 --data-root C:\path\to\Dataset_Robomaster-1
-```
-
-What it does:
-- Tunes `learning_rate`, `weight_decay`, `base_channels`, `batch_size` with ASHA.
-- Each trial writes TensorBoard logs to its own subfolder.
-- Results are under `ray_results/armor_unet_tune`.
-
-Notes:
-- `--data-root` overrides `DATA_ROOT`; omit it if the default `Dataset_Robomaster-1` directory exists.
-- Trial directory names are shortened to keep Windows paths under 260 chars.
-
-View all trials in TensorBoard:
-```bash
-tensorboard --logdir ray_results/armor_unet_tune
-```
+## Hyperparameter Tuning
+This repository currently ships without Ray Tune. If you want to add tuning back later, see the notes at the end of this README for a clean, minimal Ray Tune setup.
 
 ## Sharing TensorBoard Logs
 To inspect runs on another machine:
 
 1. Archive logs on this machine:
    ```powershell
-   Compress-Archive -Path logs, ray_results -DestinationPath lightning_runs.zip
+   Compress-Archive -Path logs -DestinationPath lightning_runs.zip
    ```
 2. Copy `lightning_runs.zip` to the other device (USB, cloud drive, etc.).
 3. Extract it there, then launch TensorBoard pointing at the extracted folders:
    ```powershell
    tensorboard --logdir C:\\path\\to\\lightning_runs\\logs
-   tensorboard --logdir C:\\path\\to\\lightning_runs\\ray_results\\armor_unet_tune
    ```
 
 The `.gitignore` already excludes `lightning_runs.zip` and `lightning_runs/` so archived logs stay out of version control.
@@ -182,5 +157,64 @@ train.py            # Entrypoint for training/evaluation
 requirements.txt
 environment.yml
 scripts/
-  tune.py          # Ray Tune search over hparams
+  (optional) scripts/tune.py  # Add your own HPO script later
+
+## Add Ray Tune Later (clean template)
+If you want to re-introduce Ray Tune from scratch without touching the core training code:
+
+- Install: `python -m pip install "ray[tune]"`
+- Create `scripts/tune.py` with a minimal trainable that instantiates `ArmorDataModule` and `ArmorUNet`, and reports validation metrics via `TuneReportCallback`.
+- Keep all Ray-specific code isolated in `scripts/` so the main training entrypoint remains Ray-free.
+
+Minimal outline for `scripts/tune.py`:
+
+```python
+import os, argparse, torch, pytorch_lightning as pl
+from pytorch_lightning.callbacks import ModelCheckpoint
+from pytorch_lightning.loggers import TensorBoardLogger
+from ray import tune
+from ray.tune.schedulers import ASHAScheduler
+from ray.tune.integration.pytorch_lightning import TuneReportCallback
+from armor_unet.data import ArmorDataModule
+from armor_unet.lit_module import ArmorUNet
+
+def train_tune(cfg):
+    pl.seed_everything(42, workers=True)
+    dm = ArmorDataModule(data_root=cfg['data_root'], batch_size=cfg['batch_size'])
+    model = ArmorUNet(learning_rate=cfg['lr'], weight_decay=cfg['wd'], base_channels=cfg['base_ch'])
+    logger = TensorBoardLogger(save_dir=tune.get_trial_dir(), name="tb")
+    callbacks = [
+        TuneReportCallback({"val_dice": "val_dice", "val_loss": "val_loss"}, on="validation_end"),
+        ModelCheckpoint(monitor="val_dice", mode="max", save_top_k=1)
+    ]
+    trainer = pl.Trainer(
+        max_epochs=cfg['epochs'],
+        accelerator="gpu" if torch.cuda.is_available() else "cpu",
+        devices=1,
+        logger=logger,
+        callbacks=callbacks,
+        deterministic=True,
+    )
+    trainer.fit(model, datamodule=dm)
+
+if __name__ == "__main__":
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--data-root", default=os.getenv("DATA_ROOT", "Dataset_Robomaster-1"))
+    ap.add_argument("--samples", type=int, default=8)
+    ap.add_argument("--epochs", type=int, default=5)
+    args = ap.parse_args()
+
+    space = {
+        "lr": tune.loguniform(1e-5, 3e-3),
+        "wd": tune.loguniform(1e-7, 1e-3),
+        "base_ch": tune.choice([16, 32, 64]),
+        "batch_size": tune.choice([4, 8, 12]),
+        "epochs": args.epochs,
+        "data_root": args.data_root,
+    }
+    tuner = tune.Tuner(train_tune,
+        param_space=space,
+        tune_config=tune.TuneConfig(metric="val_dice", mode="max", scheduler=ASHAScheduler(), num_samples=args.samples))
+    tuner.fit()
+```
 ```

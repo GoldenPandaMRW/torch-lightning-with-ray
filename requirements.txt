@@ -6,4 +6,3 @@ numpy
 pillow
 matplotlib
 tensorboard
-ray[tune]
