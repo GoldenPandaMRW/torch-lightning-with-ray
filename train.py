@@ -2,7 +2,7 @@ import os
 import torch
 import pytorch_lightning as pl
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping, LearningRateMonitor
-from pytorch_lightning.loggers import TensorBoardLogger
+from pytorch_lightning.loggers import WandbLogger
 
 from armor_unet.data import ArmorDataModule
 from armor_unet.lit_module import ArmorUNet
@@ -66,14 +66,26 @@ def train_armor_detector(
 
     lr_monitor = LearningRateMonitor(logging_interval='epoch')
 
-    logger = TensorBoardLogger(log_dir, name='armor_unet')
+    wandb_logger = WandbLogger(
+        project='armor-unet',
+        save_dir=log_dir,
+        log_model=True,
+    )
+    wandb_logger.experiment.config.update({
+        'batch_size': batch_size,
+        'learning_rate': learning_rate,
+        'base_channels': base_channels,
+        'max_epochs': max_epochs,
+        'data_root': data_root,
+    })
+    wandb_logger.watch(model, log='all', log_freq=50)
 
     trainer = pl.Trainer(
         max_epochs=max_epochs,
         accelerator='gpu' if torch.cuda.is_available() else 'cpu',
         devices=1,
         callbacks=[checkpoint_callback, early_stop_callback, lr_monitor],
-        logger=logger,
+        logger=wandb_logger,
         log_every_n_steps=10,
         deterministic=True,
     )
@@ -90,8 +102,9 @@ def train_armor_detector(
     print("Training complete!")
     print(f"Best model saved to: {checkpoint_callback.best_model_path}")
     print(f"Best validation Dice: {checkpoint_callback.best_model_score:.4f}")
-    print(f"\nView training in TensorBoard:")
-    print(f"  tensorboard --logdir {log_dir}")
+    print("\nTrack the run in Weights & Biases:")
+    print(f"  {wandb_logger.experiment.url}")
+    wandb_logger.experiment.finish()
 
     return model, trainer, datamodule
 
